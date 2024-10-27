@@ -1,0 +1,97 @@
+#include<iostream>
+
+using namespace std;
+
+class Cofetarie {
+private:
+string nume;
+int nrAngajati;
+float* salarii;
+bool esteVegana;
+const int anDeschidere;
+float adaos;
+static int TVA;
+public:
+
+Cofetarie() : adaos(30), anDeschidere(2024) {
+this->nume = "Delice";
+this->nrAngajati = 0;
+this->esteVegana = true;
+this->salarii = NULL;
+}
+
+Cofetarie(string nume, int nrAngajati, bool vegan, int an, float adaos) :anDeschidere(an) {
+this->nume = nume;
+this->nrAngajati = nrAngajati;
+this->esteVegana = vegan;
+this->adaos = adaos;
+this->salarii = new float[nrAngajati];
+for (int i = 0; i < nrAngajati; i++) {
+this->salarii[i] = 1000 + i*100;
+}
+}
+
+string getNume() {
+return this->nume;
+}
+
+void setNume(string nume) {
+if (nume.length() > 1) {
+this->nume = nume;
+}
+}
+
+int getNrAngajati() {
+return this->nrAngajati;
+}
+
+void setNrAngajati(int nrAngajati, float* salarii) {
+if (nrAngajati > 0) {
+this->nrAngajati = nrAngajati;
+if (this->salarii != NULL) {
+delete[]this->salarii;
+}
+this->salarii = new float[this->nrAngajati];
+for (int i = 0; i < this->nrAngajati; i++) {
+this->salarii[i] = salarii[i];
+}
+}
+
+}
+
+float* getSalarii() {
+return this->salarii;
+}
+
+float getSalariu(int index) {
+if (index >= 0 && index < this->nrAngajati) {
+return this->salarii[index];
+}
+}
+
+void afisare() {
+cout << "Nume:" << this->nume << endl;
+cout << "Nr angajati:" << this->nrAngajati << endl;
+cout << "Are produse vegane:" << (this->esteVegana ? "DA" : "NU") << endl;
+cout << "An deschidere:" << this->anDeschidere << endl;
+cout << "Adaos:" << this->adaos << endl;
+cout << "TVA:" << Cofetarie::TVA << endl;
+}
+static void modificaTVA(int noulTVA) {
+if (noulTVA > 0) {
+Cofetarie::TVA = noulTVA;
+}
+}
+static int calculeazaNrTotalAngajati(int nrCofetarii, Cofetarie* vector) {
+int suma = 0;
+for (int i = 0; i < nrCofetarii; i++) {
+suma += vector[i].nrAngajati;
+}
+
+return suma;
+}
+};
+int Cofetarie::TVA = 9;
+
+
+
