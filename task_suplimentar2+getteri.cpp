@@ -1,4 +1,5 @@
-﻿//Alegeți trei obiecte din realitate. Cele trei obiecte trebuie să fie din același domeniu. 
+//Alegeți trei obiecte din realitate. Cele trei obiecte trebuie să fie din același domeniu. 
+
 //
 //Pentru cele trei obiecte realizați trei clase care să conțină atribute specifice fiecărui obiect în parte.
 //
@@ -11,6 +12,7 @@
 //În funcția main creați, inițializați și afișați câte trei obiecte de tipul fiecărei clase, astfel încât să apelați toți constructorii.
 //
 //Realizati toate clasele in acelasi fisier CPP, una sub cealalta, iar in partea de final a fisierului cu cod sursa implementati functia main in cadrul careia testati toti constructorii implementati pentru clasele implementate.
+//Varianta cu getteri 
 #include<iostream>
 #include<string>
 
@@ -25,7 +27,7 @@ public:
 	static bool areManualdeUtilizare;
 	int nrfoldere;
 	int* nrelementeF;//vector care arata cate elemente are fiecare folder din laptop
- 
+
 	//constructor 1.1
 	Laptop() :anFabricatie(0000) {
 		this->tipprocesor = "Anonim";
@@ -50,6 +52,20 @@ public:
 
 	}
 	//constructor 1.3
+	Laptop(string tipprocesor, float greutateL, float anFabricatie, int nrfoldere, int* nrelementeF) :anFabricatie(anFabricatie) {
+		this->tipprocesor = tipprocesor;
+		this->greutateL = greutateL;
+		this->areAmprenta = 0;
+		this->nrfoldere = nrfoldere;
+
+		this->nrelementeF = new int[this->nrfoldere];
+		for (int i = 0; i < this->nrfoldere; i++) {
+			this->nrelementeF[i] = nrelementeF[i];
+		}
+
+	}
+
+	
 	Laptop(const Laptop& obj):anFabricatie(obj.anFabricatie){
 		this->tipprocesor = obj.tipprocesor;
 		this->greutateL = obj.greutateL;
@@ -150,8 +166,21 @@ public:
 		this->nraplicatii = 0;
 		this->numeapl= NULL;
 	}
-
 	//constructor 2.2
+	Smartphone(string firmaTelefon, int nraplicatii, string* numeapl) :SistemdeOperare("Necunoscut") {
+		this->firmaTelefon = firmaTelefon;
+		this->capacitateStocare = 0;
+		this->areIncarcator = 0;
+		this->nraplicatii = nraplicatii;
+
+		this->numeapl = new string[this->nraplicatii];
+		for (int i = 0; i < this->nraplicatii; i++) {
+			this->numeapl[i] = numeapl[i];
+		}
+
+	}
+
+	//constructor 2.3
 	Smartphone(string firmaTelefon, int capacitateStocare, string SistemdeOperare, bool areIncarcator, int nraplicatii, string* numeapl) :SistemdeOperare(SistemdeOperare) {
 		this->firmaTelefon = firmaTelefon;
 		this->capacitateStocare = capacitateStocare;
@@ -165,7 +194,7 @@ public:
 	
 	}
 
-	//constructor 2.3
+	
 	Smartphone(const Smartphone& obj) :SistemdeOperare(obj.SistemdeOperare) {
 		this->firmaTelefon = obj.firmaTelefon;
 		this->capacitateStocare = obj.capacitateStocare;
@@ -185,6 +214,7 @@ public:
 		
 		cout << "Aici s-a apelat destructorul!!" << endl;
 	}
+
 	Smartphone& operator=(const Smartphone& obj) {
 		if (this != &obj) {
 			if (this->numeapl != NULL) {
@@ -253,6 +283,7 @@ public:
 	int nrdimensiunitableta;
 	float* dimensiuni;//in mm,vector care arata dimensiunile unei tablete
 
+
 	//constructor 3.1
 	Tableta() :codIdentificare(0) {
 		this->versiunetableta = "Anonima";
@@ -262,6 +293,17 @@ public:
 	}
 
 	//constructor 3.2
+	Tableta(string versiunetableta, int nrdimensiunitableta, float* dimensiuni) :codIdentificare(0) {
+		this->versiunetableta = versiunetableta;
+		this->areFaceID = 0;
+		this->nrdimensiunitableta = nrdimensiunitableta;
+		this->dimensiuni = new float[this->nrdimensiunitableta];
+		for (int i = 0; i < this->nrdimensiunitableta; i++) {
+			this->dimensiuni[i] = dimensiuni[i];
+		}
+	}
+
+	//constructor 3.3
 	Tableta(string versiunetableta, bool areFaceID, int codIdentificare, int nrdimensiunitableta, float* dimensiuni) :codIdentificare(codIdentificare) {
 		this->versiunetableta = versiunetableta;
 		this->areFaceID = areFaceID;
@@ -272,7 +314,6 @@ public:
 		}
 	}
 
-	//constructor 3.3 
 	Tableta(const Tableta& obj):codIdentificare(obj.codIdentificare) {
 		this->versiunetableta = obj.versiunetableta;
 		this->areFaceID = obj.areFaceID;
@@ -393,8 +434,24 @@ void main() {
 	}
 	cout << endl;
 
+	
+	int nrelementeF2[] = { 5,3,15 };
+	Laptop l3("Apple M3", 1.04, 2019, 3, nrelementeF2);
+
+	cout << "Tipul procesorului este:" << l3.gettipprocesor() << endl;
+	cout << "Greutatea laptopului in kg este:" << l3.getgreutateL() << endl;
+	cout << "Laptopul are amprenta pentru deblocare?(0-da,1-nu):" << l3.getareAmprenta() << endl;
+	cout << "Anul fabricatiei este:" << l3.getanFabricatie() << endl;
+	cout << "Numarul de foldere din laptop:" << l3.getnrfoldere() << endl;
+	cout << "Nr de elemente din Foldere:" << endl;
+	for (int i = 0; i < l3.getnrfoldere(); i++) {
+		cout << "Elemente:" << l3.getnrelementeF()[i] << endl;
+	}
+	cout << endl;
+
+
 	cout << "---------CONSTRUCTOR COPIERE 1----------" << endl;
-	Laptop l3(l2);
+	Laptop l4(l2);
 	cout << "Obiectul sablon l2:" << endl;
 	cout << "Tipul procesorului este:" << l2.gettipprocesor() << endl;
 	cout << "Greutatea laptopului in kg este:" << l2.getgreutateL() << endl;
@@ -407,16 +464,17 @@ void main() {
 	}
 	cout << endl;
 
-	cout << "Obiectul nou creat l3:" << endl;
-	cout << "Tipul procesorului este:" << l3.gettipprocesor() << endl;
-	cout << "Greutatea laptopului in kg este:" << l3.getgreutateL() << endl;
-	cout << "Laptopul are amprenta pentru deblocare?(0-da,1-nu):" << l3.getareAmprenta() << endl;
-	cout << "Anul fabricatiei este:" << l3.getanFabricatie() << endl;
-	cout << "Numarul de foldere din laptop:" << l3.getnrfoldere() << endl;
+	cout << "Obiectul nou creat l4:" << endl;
+	cout << "Tipul procesorului este:" << l4.gettipprocesor() << endl;
+	cout << "Greutatea laptopului in kg este:" << l4.getgreutateL() << endl;
+	cout << "Laptopul are amprenta pentru deblocare?(0-da,1-nu):" << l4.getareAmprenta() << endl;
+	cout << "Anul fabricatiei este:" << l4.getanFabricatie() << endl;
+	cout << "Numarul de foldere din laptop:" << l4.getnrfoldere() << endl;
 	cout << "Nr de elemente din Foldere:" << endl;
-	for (int i = 0; i < l3.getnrfoldere(); i++) {
-		cout << "Elemente:" << l3.getnrelementeF()[i] << endl;
+	for (int i = 0; i < l4.getnrfoldere(); i++) {
+		cout << "Elemente:" << l4.getnrelementeF()[i] << endl;
 	}
+
 	cout << "----------------------------------------" << endl;
 	cout << endl;
 	cout << "___________APEL OPERATORUL=______________" << endl;
@@ -463,7 +521,7 @@ void main() {
 	cout << "Numarul de foldere din laptop:" << l2.getnrfoldere() << endl;
 	cout << "Nr de elemente din Foldere:" << endl;
 	for (int i = 0; i < l2.getnrfoldere(); i++) {
-		cout << "Numar elemente din folder:" << l2.getnrelementeF()[i] << endl;
+		cout << "Elemente:" << l2.getnrelementeF()[i] << endl;
 	}
 	cout << endl;
 	cout << "Numarul de elemente maxim din foldere este:" << l2.nrelemMaxim() << endl;
@@ -504,6 +562,21 @@ void main() {
 		cout << "Aplicatie:" << s2.getnumeapl()[i] << endl;
 	}
 	cout << "Are camera frontala?(DA-1,NU-0):" << s2.getareCamerafrontala() << endl;
+	cout << endl;
+
+	string nume2[] = {"Setari","Agenda","Apple Pay"};
+	Smartphone s4("Apple", 3, nume2);
+	cout << "Brand-ul telefonului este:" << s4.getfirmaTelefon() << endl;
+	cout << "Capacitatea de stocare in GB a telefonului este:" << s4.getcapacitateStocare() << endl;
+	cout << "Sistemul de operare este:" << s4.getSistemdeOperare() << endl;
+	cout << "Are incarcator inclus?:" << s4.getareIncarcator() << endl;
+	cout << "Nr aplicatiilor din fabrica ale telefonului este de:" << s4.getnraplicatii() << endl;
+	cout << "Aplicatii:" << endl;
+
+	for (int i = 0; i < s4.getnraplicatii(); i++) {
+		cout << "Aplicatie:" << s4.getnumeapl()[i] << endl;
+	}
+	cout << "Are camera frontala?(DA-1,NU-0):" << s4.getareCamerafrontala() << endl;
 	cout << endl;
 
 	cout << "---------CONSTRUCTOR COPIERE 2----------" << endl;
@@ -623,6 +696,19 @@ void main() {
 		cout << "Dimensiuni(L/l/h):" << t2.getdimensiuni()[i] << endl;
 	}
 	cout << "Numele producatorului este:" << t2.getnumeProducator() << endl;
+	cout << endl;
+
+	float dimensiuni2[] = { 134.3,234.5,4.5 };
+	Tableta t4("iPad 9", 3, dimensiuni2);
+	cout << "Versiunea tabletei:" << t4.getversiunetableta() << endl;
+	cout << "Are Face ID?(1-Da,0-Nu):  " << t4.getareFaceID() << endl;
+	cout << "Codul de Identificare este:" << t4.getcodIdentificare() << endl;
+	cout << "Numarul de dimensiuni cunoscute ale tabletei sunt:" << t4.getnrdimensiunitableta() << endl;
+	cout << "Dimensiuni:" << endl;
+	for (int i = 0; i < t4.getnrdimensiunitableta(); i++) {
+		cout << "Dimensiuni(L/l/h):" << t4.getdimensiuni()[i] << endl;
+	}
+	cout << "Numele producatorului este:" << t4.getnumeProducator() << endl;
 	cout << endl;
 
 	cout << "---------CONSTRUCTOR COPIERE 3----------" << endl;
