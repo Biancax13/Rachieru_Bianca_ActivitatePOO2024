@@ -1,4 +1,4 @@
-﻿
+
 //Pentru clasele de la tema precedentă supraincarcarti operatorul = (de atribuire) si minim alti trei operatori(cate patru operatori pentru fiecare clasa)
 //Creati cel putin o functie prietena in proiect.
 //In main apelati atat functia prietena cat si cei 12 operatori implementati.Va recomand ca operatorii sa fie diferiti, astfel incat sa aveti experienta cu toate tipurile de operatori.
@@ -574,6 +574,19 @@ public:
 
 	}
 
+	void AfisareObiect() {
+		cout << "Versiunea tabletei:" << this->versiunetableta << endl;
+		cout << "Are Face ID?(1-Da,0-Nu):  " << this->areFaceID << endl;
+		cout << "Codul de Identificare este:" << this->codIdentificare << endl;
+		cout << "Numarul de dimensiuni cunoscute ale tabletei sunt:" << this->nrdimensiunitableta<< endl;
+		cout << "Dimensiuni:" << endl;
+		for (int i = 0; i < this->nrdimensiunitableta; i++) {
+			cout << "Dimensiuni(L/l/h):" << this->dimensiuni[i] << endl;
+		}
+		cout << "Numele producatorului este:" << this->numeProducator << endl;
+
+	}
+
 	void adaugaDimensiuneNoua(float dimensiuneNoua)
 	{
 
@@ -628,8 +641,44 @@ public:
 		}
 		return in;
 	}
-
 	
+	//sa se compare 2 tablete intre ele
+	bool operator==(const Tableta& obj)
+	{
+		bool ok = 1;
+		if ((this->versiunetableta == obj.versiunetableta) && (this->areFaceID == obj.areFaceID) && (this->nrdimensiunitableta == obj.nrdimensiunitableta)) {
+			for (int i = 0; i < this->nrdimensiunitableta; i++)
+			{
+				if (this->dimensiuni[i] == obj.dimensiuni[i]) {
+
+
+				}
+				else
+				{
+					ok = 0;
+				}
+			}
+			if (ok == 1)
+			{
+				return 1;
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	
+	}
+	float operator[](/*this*/int pozitieCautata)
+	{
+		if (pozitieCautata >= 0 && pozitieCautata < this->nrdimensiunitableta)
+		{
+			return this->dimensiuni[pozitieCautata];
+		}
+		
+	}
+
+
 
 };
 string Tableta::numeProducator = "Apple Inc.";
@@ -1170,6 +1219,21 @@ void main() {
 	cout << "Nr aplicatii s1:" << s1.getnraplicatii() << endl;
 	cout << "Nr aplicatii s4:" << s4.getnraplicatii() << endl;
 	cout << endl << endl;
+	cout << "Supraincarcarea operatorilor pentru clasa TABLETA" << endl;
+	cout << "--------------------------------Operatorul ==-------------------------" << endl << endl;
+	cout << "Obiectul t3:" << endl;
+	t3.AfisareObiect();
+	cout << endl << endl;
+
+	cout << "Obiectul t4:" << endl;
+	t4.AfisareObiect();
+	cout << endl << endl;
+	cout << "Obiectul t3 este egal in totalitate cu obiectul t4? (1-DA ; 0-NU):" << (t3 == t4) << endl << endl;
+
+	cout << "--------------------------------Operatorul [] - de indexare-------------------------" << endl << endl;
+	cout << t2 << endl << endl;
+	cout << "Dimensiunea de pe pozitia 1 este:" << t3[1] << endl;
+	cout << "Dimensiunea de pe pozitia 2 este:" << t3[2] << endl;
 	
 
 
